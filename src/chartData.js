@@ -58,10 +58,17 @@ Number examples
 23. Very high and very low numbers
 24. Regular high and regular low numbers
 25. Very high positive and high negative numbers
+
+Time break:
+26. Time break with high z-index
+27. Time break with low z-index
+28. Time break with high z-index and x-axis tick indicator
+29. Time break with low z-index and x-axis tick indicator
 */
 
 // Data series
 // Base data series of first 15 minutes:
+/*
 const dataWithIds = [{
   id: 'Device 1',
   data: getRandomData([29, 71, 106, 129, 144, 176, 135, 148, 216, 194, 210, 200, 205, 190, 215]),
@@ -102,6 +109,7 @@ const dataWithIds = [{
   id: 'Device 10',
   data: getRandomData([200, 230, 260, 290, 320, 350, 380, 410, 440, 470, 460, 450, 465, 445, 475]),
 }];
+*/
 
 const veryHighPositiveNumbers = Array.from({length: 15}, () => Math.floor(Math.random() * (9090909090 - 35353535 + 1)) + 35353535);
 veryHighPositiveNumbers.sort((a, b) => a - b);
@@ -113,7 +121,7 @@ const regularNumbers = Array.from({ length: 15 }, () => Math.floor(Math.random()
 regularNumbers.sort((a, b) => a - b);
 const negativeRegularNumbers = regularNumbers.map(num => -num);
 
-
+/*
 function getRandomData(dataArray) {
   const median = Math.floor(dataArray.length / 2);
   const medianValue = dataArray[median];
@@ -121,18 +129,18 @@ function getRandomData(dataArray) {
   const max = medianValue + 15;
   return dataArray.map(() => Math.floor(Math.random() * (max - min + 1)) + min);
 }
+*/
+// Returns object
+// const dataObjByIds = {
+//   // Convert array of objects to object of objects
+//   ...dataWithIds.reduce((acc, obj) => {
+//     acc[obj.id] = obj;
+//     return acc;
+//   }, {})
+// };
 
 // Returns object
-const dataObjByIds = {
-  // Convert array of objects to object of objects
-  ...dataWithIds.reduce((acc, obj) => {
-    acc[obj.id] = obj;
-    return acc;
-  }, {})
-};
-
-// Returns object
-const getBaseDataById = (id) => dataObjByIds[id];
+// const getBaseDataById = (id) => dataObjByIds[id];
 
 // Gets base 15 minutes plus whatever else is needed via params
 // Returns array

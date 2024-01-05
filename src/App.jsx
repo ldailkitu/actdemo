@@ -5,8 +5,13 @@ import { baseData } from './chartData';
 import { useState } from 'react';
 import variant15Image from '/1hourchart-actdemo-modified.jpg';
 import variant17Image from '/variant17chart-actdemo-modified.jpg';
+import variant26Image from '/actdemo-variant26.jpg';
+import variant27Image from '/actdemo-variant27.jpg';
+import variant28Image from '/actdemo-variant28.jpg';
+import variant29Image from '/actdemo-variant29.jpg';
 
 const getChartInfo = {
+    // title: 'Active Power',
     yAxisLabel: 'Power Output (W)',
     getSeriesData: (controlLength, totalTime, variantType) => baseData(controlLength, totalTime, variantType),
     getXAxisCategories: (xAxisTime) => {
@@ -106,7 +111,7 @@ const options = (controlLength, totalTime, variantType) => {
         from: 15,
         to: 15 + controlLength - 1 > times.length ? times.length - 1 : 15 + controlLength - 1,
         color: "#dbffcd",
-        zIndex: -1,
+        // zIndex: -1,
         label: {
           formatter: () => {
             if (variantType === 'Variant 16' || variantType === 'Variant 19') {
@@ -133,7 +138,7 @@ const options = (controlLength, totalTime, variantType) => {
     }
     return {
     plotLines: [{
-      value: 15, // x-axis tick index where the line should be placed
+      value: 14, // x-axis tick index where the line should be placed
       dashStyle: getDashStyle(), // line style
       color: getLineColor(), // line color
       width: 2, // line width,
@@ -180,6 +185,9 @@ const options = (controlLength, totalTime, variantType) => {
     // }],
     // type: 'datetime',
     ...getPlotLines(),
+    title: {
+      text: 'Time'
+    }
   },
   yAxis: {
     title: {
@@ -236,22 +244,22 @@ const getChartTimesByControlLengthTime = controlLengthTime => {
   const thirtyMinsAfterControlTotalTime = throughControlTotalTime + 15;
   const times = [{
     time: 10,
-    friendlyTime: '5 mins before control start, 10 mins shown'
+    friendlyTime: '5 mins before control start'
    }, {
     time: 15,
-    friendlyTime: 'Control start, 15 mins shown'
+    friendlyTime: 'Control start'
    }, {
     time: halfwayThroughControlTotalTime, 
-    friendlyTime: `Halfway through control, ${halfwayThroughControlTotalTime} mins shown`
+    friendlyTime: `Halfway through control`
    }, {
       time: throughControlTotalTime, 
-      friendlyTime: `Control end, ${throughControlTotalTime} mins shown`
+      friendlyTime: `Control end`
    }, {
       time: fiveMinsAfterControlTotalTime,
-      friendlyTime: `5 mins after control end, ${fiveMinsAfterControlTotalTime} mins shown`
+      friendlyTime: `5 mins after control end`
    }, {
        time: thirtyMinsAfterControlTotalTime,
-      friendlyTime: `15+ mins after control end, ${thirtyMinsAfterControlTotalTime} mins shown`
+      friendlyTime: `15+ mins after control end`
 }];
 return times;
 };
@@ -298,19 +306,12 @@ function App() {
   const [showDataVariantTwentyThreeCharts, setShowDataVariantTwentyThreeCharts] = useState(false);
   const [showDataVariantTwentyFourCharts, setShowDataVariantTwentyFourCharts] = useState(false);
   const [showDataVariantTwentyFiveCharts, setShowDataVariantTwentyFiveCharts] = useState(false);
+  const [showDataVariantTwentySixCharts, setShowDataVariantTwentySixCharts] = useState(false);
+  const [showDataVariantTwentySevenCharts, setShowDataVariantTwentySevenCharts] = useState(false);
+  const [showDataVariantTwentyEightCharts, setShowDataVariantTwentyEightCharts] = useState(false);
+  const [showDataVariantTwentyNineCharts, setShowDataVariantTwentyNineCharts] = useState(false);
   
   const getChartsByFriendlyKey = (friendlyKeyForChartCreation, variantType) => {
-    const getVariantFriendlyText = (friendlyTime) => {
-      if (variantType === 'Variant 2') {
-       const variant2FriendlyTextTime = friendlyTime.split(',')[0];
-        return variant2FriendlyTextTime; 
-      } else if (variantType === 'Variant 3') {
-        const variant3FriendlyTextTime = friendlyTime.split(',')[0];
-        return variant3FriendlyTextTime;
-      } else {
-          return friendlyTime;
-      }
-    }; 
     const charts = [];
     Object.keys(timeSeriesCharts).find((key) => {
       if (key === friendlyKeyForChartCreation) {
@@ -319,7 +320,7 @@ function App() {
         charts.push(
           <>
             <h3> Control length: {friendlyKeyForChartCreation}</h3>
-            <h3> Total time to show on charts: {getVariantFriendlyText(friendlyTime)}</h3>
+            <h3> Total time to show on charts: {friendlyTime}</h3>
             <HighchartsReact highcharts={Highcharts} options={options(controlLength, time, variantType)} key={`${key}${time}${variantType}`} />
           </>
         );
@@ -415,7 +416,7 @@ function App() {
     const showJsx = [];
     // Variant 
     if (showState) {
-      const buttonText = `Hide ${variantType} Control Length Chart`;
+      const buttonText = `Hide ${variantType} Chart`;
       showJsx.push(<button onClick={() => setShowState(false)}>{buttonText}</button>);
       showJsx.push(<h4>Hover over image (edited graphic)</h4>);
       console.log(variantType);
@@ -423,9 +424,17 @@ function App() {
         showJsx.push(<img src={variant15Image} alt="Variant 15" />);
       } else if (variantType === 'Variant 17') {
         showJsx.push(<img src={variant17Image} alt="Variant 17" />);
+      } else if (variantType === 'Variant 26') {
+        showJsx.push(<img src={variant26Image} alt="Variant 26" />);
+      } else if (variantType === 'Variant 27') {
+        showJsx.push(<img src={variant27Image} alt="Variant 27" />);
+      } else if (variantType === 'Variant 28') {
+        showJsx.push(<img src={variant28Image} alt="Variant 28" />);
+      } else if (variantType === 'Variant 29') {
+        showJsx.push(<img src={variant29Image} alt="Variant 29" />);
       }
     } else {
-      const buttonText = `Show ${variantType} Control Length Chart`;
+      const buttonText = `Show ${variantType} Chart`;
       showJsx.push(<button onClick={() => setShowState(true)}>{buttonText}</button>);
     }
     return showJsx;
@@ -445,7 +454,7 @@ function App() {
       <h2>Color Variants (Shown for 1 hour controls)</h2>
       <h3>Variant Type 4: Shades of Blue</h3>
       {showVariantChart(showDataVariantFourCharts, setShowDataVariantFourCharts, 'Variant 4')}
-      <h3>Variant Type 5: Shades of Green</h3>
+      <h3>Variant Type 5: Shades of Blue and Green</h3>
       {showVariantChart(showDataVariantFiveCharts, setShowDataVariantFiveCharts, 'Variant 5')}
       <h3>Variant Type 6: Slide show colors</h3>
       {showVariantChart(showDataVariantSixCharts, setShowDataVariantSixCharts, 'Variant 6')}
@@ -455,31 +464,40 @@ function App() {
       {showVariantChart(showDataVariantEightCharts, setShowDataVariantEightCharts, 'Variant 8')}
       <h3>Variant Type 9: Random Colors</h3>
       {showVariantChart(showDataVariantNineCharts, setShowDataVariantNineCharts, 'Variant 9')}
-      <h2>Plotline "Control Start/End" Line Style</h2>
+      <h2>Plotline "Control Start/End" Line Style (Shown for 1 hour controls)</h2>
       <h3>Variant Type 10: Dashed Line</h3>
       {showVariantChart(showDataVariantTenCharts, setShowDataVariantTenCharts, 'Variant 10')}
       <h3>Variant Type 11: Regular Line</h3>
       {showVariantChart(showDataVariantElevenCharts, setShowDataVariantElevenCharts, 'Variant 11')}
       <h3>Variant Type 12: Dot Line</h3>
       {showVariantChart(showDataVariantTwelveCharts, setShowDataVariantTwelveCharts, 'Variant 12')}
-      <h2>Plotline "Control Start/End" Line Label Style</h2>
+      <h2>Plotline "Control Start/End" Line Label Style (Shown for 1 hour controls)</h2>
       <h3>Variant Type 13: Horizontal Label</h3>
       {showVariantChart(showDataVariantThirteenCharts, setShowDataVariantThirteenCharts, 'Variant 13')}
       <h3>Variant Type 14: Vertical Label</h3>
       {showVariantChart(showDataVariantFourteenCharts, setShowDataVariantFourteenCharts, 'Variant 14')}
       <h3>Variant Type 15: No Label but hoverable</h3>
       {showDataVariantImageChart(showDataVariantFifteenCharts, setShowDataVariantFifteenCharts, 'Variant 15')}
-      <h2>Plotbands</h2>
+      <h2>Plotbands (Shown for 1 hour controls)</h2>
       <h3>Variant Type 16: Plot bands with label</h3>
       {showVariantChart(showDataVariantSixteenCharts, setShowDataVariantSixteenCharts, 'Variant 16')}
       <h3>Variant Type 17: Plot bands without label but hoverable</h3>
       {showDataVariantImageChart(showDataVariantSeventeenCharts, setShowDataVariantSeventeenCharts, 'Variant 17')}
-      <h2>Plotlines and plotlines</h2>
+      <h2>Plotlines and plotlines (Shown for 1 hour controls)</h2>
       <h3>Variant Type 18: Plot band (with no label) and plot line label</h3>
       {showVariantChart(showDataVariantEighteenCharts, setShowDataVariantEighteenCharts, 'Variant 18')}
       <h3>Variant Type 19: Plot band (with labels) and plot line labels</h3>
       {showVariantChart(showDataVariantNineteenCharts, setShowDataVariantNineteenCharts, 'Variant 19')}
-      <h2>Number examples</h2>
+      <h2>Break in Graph for Long Controls (Shown for 6 hour controls)</h2>
+      <h3>Variant Type 20: Break in Graph that covers data</h3>
+      {showDataVariantImageChart(showDataVariantTwentySixCharts, setShowDataVariantTwentySixCharts, 'Variant 26')}
+      <h3>Variant Type 21: Break in Graph that does not cover data</h3>
+      {showDataVariantImageChart(showDataVariantTwentySevenCharts, setShowDataVariantTwentySevenCharts, 'Variant 27')}
+      <h3>Variant Type 22: Break in Graph that covers data and has x-axis tick</h3>
+      {showDataVariantImageChart(showDataVariantTwentyEightCharts, setShowDataVariantTwentyEightCharts, 'Variant 28')}
+      <h3>Variant Type 23: Break in Graph that does not cover data and has x-axis tick</h3>
+      {showDataVariantImageChart(showDataVariantTwentyNineCharts, setShowDataVariantTwentyNineCharts, 'Variant 29')}
+      <h2>Number examples (Shown for 1 hour controls)</h2>
       <h3>1. Very High Numbers</h3>
       {showVariantChart(showDataVariantTwentyCharts, setShowDataVariantTwentyCharts, 'Variant 20')}
       <h3>2. Very Small Numbers</h3>
